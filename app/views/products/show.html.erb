@@ -1,0 +1,18 @@
+<div class="w-100 text-center bg-dark text-light fs-2"> Product Details</div>
+<div class="container mt-5">
+<div class="row">
+    <div class="col-6">
+        <img src="<%= @product.image %>" class="img-fluid product-details-image" />
+    </div>
+    <div class="col-6">
+        <div class="product-details-info">
+            <h1 class="product-details-title"> <%= @product.title %> </h1>
+            <p class="product-details-price"> <span class="text-success fs-4"> Price: </span> $<%= @product.price %> </p>
+            <p class="product-details-rating"> <span class="text-success fs-4"> Rating: </span> <%= @product.rating %> </p>
+            <p class="product-details-description"> <%= @product.description  %> </p>
+            <p class="product-details-category " > <span class="text-success fs-4"> Category: </span> <%= @product.category %> </p>
+        </div>
+    </div>
+</div>
+</div>
+

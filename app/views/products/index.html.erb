@@ -1,0 +1,64 @@
+<div class="w-100 text-center bg-dark text-light fs-2"> Product Page</div>
+
+<div class="container">
+
+    <div>
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="card border-0 my-3" style="width: 18rem">
+                    <h4 class="card-title ">Filters </h4>
+                    <div class="card-body">
+                        <form id= "form" action= "<% request.query_parameters %>" method="get"> 
+                            <div class="mb-3" >
+                                <%= label_tag :name, 'Search by Name:', class: "fs-5" %>
+                                <%= text_field_tag :name, params[:name] , class: "form-control" %>
+                            </div>
+                            <div class="mb-3" >
+                                <label class="fs-5"> Filter By Price </label>
+                                <%= select_tag :sort_option, options_for_select([["Choose", ""], ["Low to High", "low_to_high"], ["High to Low", "high_to_low"]], request.params.merge[:sort_option]), { onchange: "this.form.submit()", class: "form-select"} %>
+                            </div>
+                            <div class="mb-3" >
+                                <label class="fs-5"> Filter By Category </label>
+                                 <%= select_tag :category, options_for_select( [["All", ""]] +  Product.pluck(:category).uniq, params[:category]), { onchange: "this.form.submit()", class: "form-select"} %>
+                            </div>
+                            <div class="mb-3" >
+                                <label class="fs-5"> Min Rating </label>
+                                <%= select_tag :min_rating, options_for_select([1,2,3,4,5]), {onchange: "this.form.submit()",  class: "form-select"} %>
+                            </div>
+                            <div class="mb-3" >
+                                <label class="fs-5"> Filter By Price Range </label>
+                                <input type="text" id="min_price" name="min_price" placeholder="min" class="form-control mb-2">
+                                <input type="text" id="max_price" name="max_price" placeholder="max" class="form-control ">
+                                <input type="submit" class="btn btn-outline-success my-1">
+                            </div>
+                            <div class="mb-3">
+                                <%= link_to "Clear Filter", request.params.clear, class: "btn btn-outline-success" %>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="product-grid"> 
+        <% if @products.count == 0 %>
+            <h2 class="text-secondary text-center"> Not Found </h2>
+        <% else %>
+        <% @products.each do |product| %>
+            <div class="product-card" >
+                <%= link_to product_path(product) do %>
+                    <img src="<%= product.image %>" class="product-image" />
+                    <div class="product-info">
+                        <h3 class="product-title"> <%= product.title %> </h3>
+                        <p class="product-price">$<%= product.price %></p>
+                        <p class="product-rating">Rating: <%= product.rating %></p>
+
+                    </div>
+                    <% end %>
+            </div>
+            <% end %>
+        <% end %>
+    </section>
+
+</div>
